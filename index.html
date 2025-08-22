@@ -1,173 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mera Hostel Journey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mera Hostel Journey — Advanced</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg-1: #0b0b16;
+      --bg-2: #161630;
+      --text: #f2f2f7;
+      --muted: #c8c8d6;
+      --neon: #ff2d95;
+      --aqua: #00ffd1;
+      --card: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 10px 35px rgba(0,0,0,0.35);
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      color: #fff;
-      line-height: 1.6;
-      overflow-x: hidden;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #26133b 0%, transparent 60%),
+                  radial-gradient(1200px 600px at 110% 10%, #062a3a 0%, transparent 60%),
+                  linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      overflow-x:hidden;
     }
-    header {
-      background: #0f3460;
-      text-align: center;
-      padding: 20px;
-      font-size: 2.5rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      color: #e94560;
-      text-shadow: 2px 2px 10px rgba(233,69,96,0.7);
-    }
-    .container {
-      width: 85%;
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px;
-    }
-    .section {
-      background: rgba(255,255,255,0.05);
-      margin: 20px 0;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .section:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 20px rgba(233,69,96,0.7);
-    }
-    .section h2 {
-      color: #e94560;
-      margin-bottom: 10px;
-      font-size: 1.8rem;
-    }
-    .section p {
-      font-size: 1.1rem;
-      color: #eee;
-    }
-    footer {
-      background: #0f3460;
-      color: #ccc;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9rem;
-      margin-top: 30px;
-    }
-    #langBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #e94560;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(233,69,96,0.6);
-      transition: 0.3s;
-    }
-    #langBtn:hover {
-      background: #ff4b5c;
-      box-shadow: 0 6px 20px rgba(255,75,92,0.8);
-    }
+
+    /* Floating particle canvas */
+    #bgCanvas{ position:fixed; inset:0; z-index:-2; display:block; background:transparent; }
+
+    /* Top bar */
+    .topbar{ position:sticky; top:0; z-index:50; backdrop-filter: blur(10px); background: linear-gradient(90deg, rgba(255,45,149,0.12), rgba(0,255,209,0.12)); border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .topbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;justify-content:space-between;padding:14px 18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;letter-spacing:0.5px}
+    .brand .spark{font-family:'Kalam', cursive;color:var(--neon);font-size:1.5rem;text-shadow:0 0 15px var(--neon)}
+
+    .controls{display:flex;align-items:center;gap:10px}
+    .chip{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.15); padding:10px 14px; border-radius:999px; background:var(--glass); cursor:pointer; user-select:none; box-shadow: var(--shadow); transition: transform .15s ease, background .2s ease, box-shadow .2s ease; }
+    .chip:hover{transform: translateY(-2px) scale(1.02)}
+    .chip:active{transform: translateY(0) scale(.98)}
+    .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--aqua);box-shadow:0 0 10px var(--aqua)}
+
+    /* Header hero */
+    header.hero{max-width:1100px;margin:28px auto 12px; padding:24px 18px}
+    .title{ font-size: clamp(2rem, 4vw, 3rem); font-weight:800; line-height:1.1; text-shadow:0 0 25px rgba(255,45,149,.35); }
+    .subtitle{opacity:.9;margin-top:10px;color:var(--muted)}
+
+    /* Sections */
+    .container{max-width:1100px;margin:0 auto;padding:10px 18px 100px}
+    .card{ background: var(--card); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 18px 18px 20px; margin: 16px 0; box-shadow: var(--shadow); transform: translateY(22px) scale(.98); opacity: 0; transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s ease, box-shadow .3s ease; }
+    .card.show{transform: translateY(0) scale(1);opacity:1}
+    .card:hover{box-shadow:0 15px 45px rgba(255,45,149,.25), 0 8px 24px rgba(0,255,209,.15)}
+    .row{display:flex;align-items:flex-start;gap:14px}
+    .emoji{font-size:1.8rem;filter:drop-shadow(0 0 6px rgba(255,255,255,.25))}
+    .card h2{font-size:1.25rem;margin-top:2px}
+    .card h2 span{color:var(--neon)}
+    .text{margin-top:8px;color:#eaeaf4;font-size:1.05rem}
+
+    /* Badge strip */
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+    .badge{border:1px dashed rgba(255,255,255,0.25);padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:.95}
+
+    /* Timeline progress */
+    .progress{position:sticky;top:68px;z-index:1;margin:10px 0 22px;height:6px;border-radius:999px;background:rgba(255,255,255,0.12);overflow:hidden}
+    .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--neon),var(--aqua));box-shadow:0 0 20px var(--neon)}
+
+    /* Floating back to top */
+    .to-top{position:fixed;right:18px;bottom:18px;background:var(--neon);color:#140414;border:none;border-radius:999px;padding:12px 14px;font-weight:700;box-shadow:0 12px 30px rgba(255,45,149,.6);cursor:pointer;display:flex;align-items:center;gap:8px}
+    .to-top[hidden]{display:none}
+
+    /* Footer */
+    footer{max-width:1100px;margin:18px auto 26px;padding:0 18px;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:720px){ .row{flex-direction:column} .emoji{font-size:1.6rem} }
   </style>
 </head>
 <body>
-  <header>Mera Hostel Journey</header>
-  <div class="container">
-    <div class="section" data-hin="April ka mahina tha, mera pehla din hostel me tha. Bohot bakwaas tha. Ek ladka mujhe room se nikal raha tha, par humne usko hi lock kar diya. 2-3 ghante baad pata nahi kaise wo bahar aa gaya." 
-         data-eng="It was April, my first day at the hostel. It was terrible. A boy tried to throw me out of the room, but we locked him inside instead. After 2-3 hours, he somehow got out.">
-      <h2>Pehla Din Hostel (April)</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Usne ma'am ko complain kiya. Ma'am ne gale lagaya aur samjhaya ki aisa nahi karna chahiye. Par hum nahi maane." 
-         data-eng="He complained to the warden. She hugged us and explained we shouldn't do that. But we didn't listen.">
-      <h2>Warden Ki Daant & Pyaar</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Ma'am ne mujhe mere age ke bachon ke saath rakha, par hum phir bhi shararat karte rahe. Baad me maar bhi khayi aur wapas bhi ki." 
-         data-eng="The warden placed me with kids my age, but we kept misbehaving. Later, I got punished and even fought back.">
-      <h2>Punishment Time</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Ma'am baar-baar ghar call karti thi, 'Bhai Sahab, isko le jaiye.' Par Papa kabhi nahi aaye." 
-         data-eng="The warden kept calling home, saying 'Take him away,' but my father never came.">
-      <h2>Parents Ko Call</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Lockdown aaya, ghar me rahe. 7th ke half me wapas aaye aur ek ladki se pyaar ho gaya." 
-         data-eng="Lockdown came, I stayed home. In 7th grade, I returned and fell in love with a girl.">
-      <h2>Lockdown Aur Pyaar</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="10th me decide kiya ki mehnat karenge. Summer vacation me pura syllabus khatam kar diya." 
-         data-eng="In 10th, I decided to work hard. Finished my entire syllabus during summer vacation.">
-      <h2>10th Ki Taiyari</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Pehle shaant rahe, fir galat group me pad gaye. 2-3 baccho ko chupke se maara, kisi ko pata nahi chala." 
-         data-eng="At first I was calm, then I joined a bad group. Secretly fought with 2-3 kids and no one found out.">
-      <h2>Hostel Ki Fights</h2>
-      <p></p>
-    </div>
-    <div class="section" data-hin="Pre-board ke time English ka paper tha. Dost Vivek ka ek senior se jhagda ho gaya. Paper ke baad bathroom me 6-7 logon ke sath saamna kiya." 
-         data-eng="During pre-boards, my friend Vivek had issues with a senior. After the exam, we faced him with 6-7 others in the bathroom.">
-      <h2>Pre-Board Ka Drama</h2>
-      <p></p>
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="spark">⚡</span>
+        <span>Teen Hostel Journey</span>
+      </div>
+      <div class="controls">
+        <div id="langChip" class="chip" title="Switch language">
+          <span class="dot" id="langDot"></span>
+          <span id="langLabel">Hinglish</span>
+        </div>
+        <div id="musicChip" class="chip" title="Play / Pause music">
+          <span class="dot" style="background:var(--neon);box-shadow:0 0 10px var(--neon)"></span>
+          <span id="musicLabel">Play Music 🎵</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <button id="langBtn">Hinglish</button>
+  <header class="hero">
+    <h1 class="title">🔥 Mera Hostel Journey — from Chaos to Comeback 🔥</h1>
+    <p class="subtitle">Bilingual story (Hinglish / English), neon vibes, animations, music & teen-style badges. Scroll and enjoy! 😎</p>
+  </header>
 
-  <footer>&copy; 2025 Mera Hostel Journey</footer>
+  <div class="container">
+    <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
 
-  <script>
-    const sections = document.querySelectorAll('.section');
-    const langBtn = document.getElementById('langBtn');
-    let currentLang = 'hin';
+    <div class="badges" aria-label="achievements">
+      <span class="badge">🏁 First Day Survivor</span>
+      <span class="badge">🧠 Lesson Learnt (kinda)</span>
+      <span class="badge">❤️ First Crush</span>
+      <span class="badge">📚 10th Grind</span>
+      <span class="badge">🛡️ Squad Life</span>
+    </div>
 
-    function updateLanguage() {
-      sections.forEach(sec => {
-        sec.querySelector('p').textContent = sec.getAttribute(`data-${currentLang}`);
-      });
-    }
+    <!-- Cards -->
+    <article class="card" data-h2="📅 Pehla Din Hostel (April)" data-h2-en="📅 First Day (April)" data-hin="April ka mahina tha 😒, pehla din hostel me... ek ladka mujhe room se nikal raha tha, humne usko hi lock kar diya 😆. 2–3 ghante baad pata nahi kaise wo bahar aa gaya." data-eng="It was April 😒, my first day at the hostel… a boy tried to throw me out, but we locked him inside instead 😆. After 2–3 hours, he somehow got out.">
+      <div class="row">
+        <div class="emoji">📅</div>
+        <div>
+          <h2><span>📅</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
 
-    // Animate on scroll
-    window.addEventListener('scroll', () => {
-      sections.forEach(sec => {
-        const rect = sec.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          sec.classList.add('show');
-        }
-      });
-    });
+    <article class="card" data-h2="🤗 Warden Ki Daant & Pyaar" data-h2-en="🤗 Warden’s Scold & Care" data-hin="Usne ma'am ko complain kiya 😬. Ma'am ne gale lagaya 🤗 aur samjhaya — aisa mat karo. Par hum nahi maane 😜." data-eng="He complained to the warden 😬. She hugged us 🤗 and explained — don’t do that. But we didn’t listen 😜.">
+      <div class="row">
+        <div class="emoji">🤗</div>
+        <div>
+          <h2><span>🤗</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
 
-    // Language toggle
-    langBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'hin' ? 'eng' : 'hin';
-      langBtn.textContent = currentLang === 'hin' ? 'Hinglish' : 'English';
-      updateLanguage();
-    });
-
-    // Initialize default language
-    updateLanguage();
-  </script>
-</body>
-</html>
+    <article class="card" data-h2="⚡ Punishment Time" data-h2-en="⚡ Punishment Time" data-hin="Punishment time 😤! Maar bhi khayi aur wapas bhi di 😎." data-eng="Punishment time 😤! Got beaten and hit back too 😎.">
+      <d
