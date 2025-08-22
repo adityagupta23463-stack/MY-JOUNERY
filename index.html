@@ -138,4 +138,205 @@
     </article>
 
     <article class="card" data-h2="⚡ Punishment Time" data-h2-en="⚡ Punishment Time" data-hin="Punishment time 😤! Maar bhi khayi aur wapas bhi di 😎." data-eng="Punishment time 😤! Got beaten and hit back too 😎.">
-      <d
+      <div class="row">
+        <div class="emoji">⚡</div>
+        <div>
+          <h2><span>⚡</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-h2="📞 Parents Ko Call" data-h2-en="📞 Calls to Home" data-hin="Ma'am baar-baar ghar call karti thi 📞… ‘Bhai Sahab, isko le jaiye.’ Par Papa nahi aaye 😅." data-eng="The warden kept calling home 📞… ‘Please take him.’ But Dad never came 😅.">
+      <div class="row">
+        <div class="emoji">📞</div>
+        <div>
+          <h2><span>📞</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-h2="❤️ Lockdown Aur Pyaar" data-h2-en="❤️ Lockdown & Love" data-hin="Lockdown 😷, ghar par the. 7th ke half me wapas aaye aur ek ladki se pyaar ho gaya ❤️." data-eng="Lockdown 😷 — stayed at home. Mid–7th I returned and fell in love with a girl ❤️.">
+      <div class="row">
+        <div class="emoji">❤️</div>
+        <div>
+          <h2><span>❤️</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-h2="📚 10th Ki Taiyari" data-h2-en="📚 10th Grade Grind" data-hin="10th me decide kiya 📚 — mehnat karenge. Summer vacation me poora syllabus khatam kar diya 🔥." data-eng="In 10th I decided 📚 to work hard. Finished the entire syllabus in summer 🔥.">
+      <div class="row">
+        <div class="emoji">📚</div>
+        <div>
+          <h2><span>📚</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-h2="💥 Hostel Ki Fights" data-h2-en="💥 Hostel Fights" data-hin="Pehle shaant rahe, phir galat group me pad gaye 😈. 2–3 bacchon ko chupke se topka diya — kisi ko pata nahi chala 💥." data-eng="At first I stayed calm, then fell in with a bad group 😈. Secretly roughed up 2–3 kids — no one knew 💥.">
+      <div class="row">
+        <div class="emoji">💥</div>
+        <div>
+          <h2><span>💥</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-h2="🚽 Pre‑Board Ka Drama" data-h2-en="🚽 Pre‑Board Drama" data-hin="Pre‑board ke time English ka paper tha. Paper ke baad bathroom me 6–7 ladkon ke saath face‑off hua 😱 — yaadgar din!" data-eng="During pre‑boards (English), after the paper there was a bathroom face‑off with 6–7 boys 😱 — unforgettable!">
+      <div class="row">
+        <div class="emoji">🚽</div>
+        <div>
+          <h2><span>🚽</span> <span class="h2text"></span></h2>
+          <p class="text"></p>
+        </div>
+      </div>
+    </article>
+
+    <button class="to-top" id="toTop" hidden>⬆️ Top</button>
+  </div>
+
+  <footer>
+    © 2025 Teen Hostel Journey • Built with HTML + CSS + JavaScript • Neon vibes ⚡
+  </footer>
+
+  <!-- Background music (royalty‑free) -->
+  <audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2e55f8d2a3.mp3?filename=lofi-study-112191.mp3" type="audio/mp3" />
+  </audio>
+
+  <script>
+    // Wrap everything to ensure DOM is fully ready before accessing elements
+    window.addEventListener('DOMContentLoaded', () => {
+      // ===== Language state =====
+      let currentLang = 'hin'; // 'hin' or 'eng'
+
+      const cards = [...document.querySelectorAll('.card')];
+      const langLabel = document.getElementById('langLabel');
+      const langChip = document.getElementById('langChip');
+
+      function applyLanguage(){
+        cards.forEach(card=>{
+          const h2 = card.querySelector('.h2text');
+          const p = card.querySelector('.text');
+          h2.textContent = (currentLang==='hin') ? card.dataset.h2 : card.dataset.h2En;
+          p.textContent = (currentLang==='hin') ? card.dataset.hin : card.dataset.eng;
+        })
+      }
+
+      langChip.addEventListener('click', ()=>{
+        currentLang = currentLang === 'hin' ? 'eng' : 'hin';
+        langLabel.textContent = currentLang === 'hin' ? 'Hinglish' : 'English';
+        // Tiny pulse effect on switch
+        langChip.style.transform = 'translateY(-2px) scale(1.05)';
+        setTimeout(()=> langChip.style.transform = '', 160);
+        applyLanguage();
+      });
+
+      // ===== Reveal on scroll =====
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+      },{threshold: .18});
+      cards.forEach(c=> io.observe(c));
+
+      // ===== Progress bar & Back-to-top =====
+      const bar = document.getElementById('bar');
+      const toTop = document.getElementById('toTop');
+      function setProgress(){
+        const scrollTop = window.scrollY;
+        const docH = document.body.scrollHeight - window.innerHeight;
+        const p = Math.max(0, Math.min(1, docH > 0 ? (scrollTop / docH) : 0));
+        bar.style.width = (p*100)+'%';
+        toTop.hidden = scrollTop < 400;
+      }
+      window.addEventListener('scroll', setProgress);
+      setProgress();
+
+      toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+      // ===== Music control =====
+      const musicChip = document.getElementById('musicChip');
+      const musicLabel = document.getElementById('musicLabel');
+      const bgm = document.getElementById('bgm');
+      let playing = false;
+      musicChip.addEventListener('click', async ()=>{
+        try {
+          if(!playing){ await bgm.play(); musicLabel.textContent = 'Pause Music ⏸️'; }
+          else { bgm.pause(); musicLabel.textContent = 'Play Music 🎵'; }
+          playing = !playing;
+          musicChip.style.transform = 'translateY(-2px) scale(1.05)';
+          setTimeout(()=> musicChip.style.transform = '', 160);
+        } catch(err) {
+          alert('Autoplay blocked — tap again to play.');
+        }
+      });
+
+      // ===== Particle background (neon dots + linking lines) =====
+      const canvas = document.getElementById('bgCanvas');
+      const ctx = canvas.getContext('2d');
+      function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+      window.addEventListener('resize', resize); resize();
+
+      const N = 90;
+      const parts = Array.from({length:N}, ()=>({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*2 + 0.8,
+        vx: (Math.random()-.5)*0.8,
+        vy: (Math.random()-.5)*0.8
+      }));
+
+      function step(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(let i=0;i<N;i++){
+          for(let j=i+1;j<N;j++){
+            const a = parts[i], b = parts[j];
+            const dx=a.x-b.x, dy=a.y-b.y; const d = Math.hypot(dx,dy);
+            if(d<120){
+              const alpha = 1 - d/120;
+              const grad = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+              grad.addColorStop(0,'rgba(255,45,149,'+alpha+')');
+              grad.addColorStop(1,'rgba(0,255,209,'+alpha+')');
+              ctx.strokeStyle = grad; ctx.lineWidth = .6;
+              ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+            }
+          }
+        }
+        parts.forEach(p=>{
+          p.x += p.vx; p.y += p.vy;
+          if(p.x<0||p.x>canvas.width) p.vx*=-1;
+          if(p.y<0||p.y>canvas.height) p.vy*=-1;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = '#ff2d95'; ctx.shadowBlur = 8; ctx.shadowColor = '#ff2d95';
+          ctx.fill(); ctx.shadowBlur = 0;
+        });
+        requestAnimationFrame(step);
+      }
+      step();
+
+      // ===== Self-tests (basic runtime checks) =====
+      (function runSelfTests(){
+        console.group('%cSelf‑tests','color:#00ffd1');
+        try {
+          console.assert(document.getElementById('toTop') instanceof HTMLElement, 'toTop button exists');
+          console.assert(document.getElementById('bar') instanceof HTMLElement, 'progress bar exists');
+          console.assert(cards.length > 0, 'cards found');
+          const firstText = cards[0].querySelector('.text');
+          const before = firstText.textContent;
+          const prev = currentLang; currentLang = prev==='hin'?'eng':'hin'; applyLanguage();
+          const after = firstText.textContent; currentLang = prev; applyLanguage();
+          console.assert(before !== after, 'language toggle updates text');
+          console.log('All self‑tests passed ✅');
+        } catch (e){
+          console.error('Self‑tests failed ❌', e);
+        }
+        console.groupEnd();
+      })();
+    });
+  </script>
+</body>
+</html>
